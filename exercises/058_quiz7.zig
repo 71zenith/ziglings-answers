@@ -192,8 +192,8 @@ const TripItem = union(enum) {
             // Oops! The hermit forgot how to capture the union values
             // in a switch statement. Please capture both values as
             // 'p' so the print statements work!
-            .place => print("{s}", .{p.name}),
-            .path => print("--{}->", .{p.dist}),
+            .place => |p| print("{s}", .{p.name}),
+            .path => |p| print("--{}->", .{p.dist}),
         }
     }
 };
@@ -351,7 +351,7 @@ const HermitsNotebook = struct {
     }
 };
 
-pub fn main() void {
+pub fn main() !void {
     // Here's where the hermit decides where he would like to go. Once
     // you get the program working, try some different Places on the
     // map!
@@ -425,7 +425,7 @@ pub fn main() void {
 // The remaining space in the trip array will contain null values, so
 // we need to loop through the items in reverse, skipping nulls, until
 // we reach the destination at the front of the array.
-fn printTrip(trip: []?TripItem) void {
+fn printTrip(trip: []?TripItem) !void {
     // We convert the usize length to a u8 with @intCast(), a
     // builtin function just like @import().  We'll learn about
     // these properly in a later exercise.
